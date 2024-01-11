@@ -9,6 +9,7 @@ namespace WebStoreApi.Mapping
         public MappingConfiguration()
         {
             CreateMap<Contact, ContactDto>().ReverseMap();
+            CreateMap<ApplicationUser, UserProfileDto>().ReverseMap();
         }
     }
 }

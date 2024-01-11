@@ -18,6 +18,10 @@ namespace WebStoreApi.Models.DTOS
         [MaxLength(100)]
         public string? Address { get; set; }
 
+        public string userName { get; set; }
+
+        
+
         [MinLength(8),MaxLength(100)]
         public string Password { get; set; }
     }

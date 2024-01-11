@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebStoreApi.Models.DTOS;
 using WebStoreApi.Reposaitories.IReposaitories;
@@ -16,7 +17,7 @@ namespace WebStoreApi.Controllers
             _contacts = contacts;
         }
 
-
+        [Authorize]
         [HttpGet(Name = "GetAllContacts")]
         public async Task<IActionResult> GetAll(int? page)
         {
