@@ -10,6 +10,8 @@ namespace WebStoreApi.Mapping
         {
             CreateMap<Contact, ContactDto>().ReverseMap();
             CreateMap<ApplicationUser, UserProfileDto>().ReverseMap();
+            CreateMap<Order, OrderResponseDto>().ReverseMap();
+            //CreateMap<List<Order>, List<OrderResponseDto>>().ReverseMap();
         }
     }
 }

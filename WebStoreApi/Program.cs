@@ -62,6 +62,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IContcatsReposaitory, ContactsReposaitory>();
 builder.Services.AddScoped<IProductReposaitory, ProductReposaitory>();
 builder.Services.AddScoped<IAccountReposaitory, AccountReposaitory>();
+builder.Services.AddScoped<IUserReposaitory, UserReposaitory>();
+builder.Services.AddScoped<ICartReposaitory, CartReposaitory>();
+builder.Services.AddScoped<IOrderReposaitory, OrderReposaitory>();
 builder.Services.AddAutoMapper(typeof(MappingConfiguration));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 

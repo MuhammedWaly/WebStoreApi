@@ -8,6 +8,7 @@ using System.Text;
 using WebStoreApi.Models;
 using WebStoreApi.Models.DTOS;
 using WebStoreApi.Reposaitories.IReposaitories;
+using WebStoreApi.Services;
 
 namespace WebStoreApi.Controllers
 {
@@ -26,30 +27,6 @@ namespace WebStoreApi.Controllers
             _logger = logger;
         }
 
-        private string GetUserId()
-        {
-            var identity = User.Identity as ClaimsIdentity;
-            if (identity == null)
-            {
-                return null;
-            }
-
-            var claim = identity.Claims.FirstOrDefault(c => c.Type.ToLower() == "uid");
-            if (claim == null)
-                return null;
-
-            string id;
-            try
-            {
-                id = claim.Value.ToString();
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-            return id;
-        }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserDto user)
@@ -84,7 +61,7 @@ namespace WebStoreApi.Controllers
         [HttpGet("Profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var id = GetUserId();
+            var id = JwtReader.GetUserId(User);
             if (id == null)
                 return Unauthorized();
 
@@ -97,7 +74,7 @@ namespace WebStoreApi.Controllers
         [HttpPut("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile(UpdateUserProfileDto user)
         {
-            var id = GetUserId();
+            var id = JwtReader.GetUserId(User);
             if (id == null)
                 return Unauthorized();
 
@@ -121,7 +98,7 @@ namespace WebStoreApi.Controllers
         [HttpPut("UpdatePassword")]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordDto updatePasswordDto)
         {
-            var id = GetUserId();
+            var id = JwtReader.GetUserId(User);
             if (id == null)
                 return Unauthorized();
 
