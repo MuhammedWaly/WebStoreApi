@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MailKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebStoreApi.Models.DTOS;
 using WebStoreApi.Reposaitories.IReposaitories;
+using WebStoreApi.Services;
 
 namespace WebStoreApi.Controllers
 {
@@ -11,10 +13,12 @@ namespace WebStoreApi.Controllers
     public class ContactsController : ControllerBase
     {
         private readonly IContcatsReposaitory _contacts;
+        private readonly IMailingService _mailingService;
 
-        public ContactsController(IContcatsReposaitory contacts)
+        public ContactsController(IContcatsReposaitory contacts, IMailingService mailingService)
         {
             _contacts = contacts;
+            _mailingService = mailingService;
         }
 
         [Authorize]
@@ -60,6 +64,13 @@ namespace WebStoreApi.Controllers
                 return BadRequest(ModelState);
             }
             var contacts = await _contacts.AddContcatAsync(dto);
+
+            string Body = "Dear " + dto.FirstName + " " + dto.LastName + "\n" +
+                "We have received your message. Thank you for contactiong us. \n" +
+                "Our team will contact you very soon. \n" +
+                "Best regards \n\n" +
+                " Your message : \n" + dto.Message;
+            await _mailingService.SendEmailAsync(dto.Email, "Contact information", Body);
 
             return Ok(contacts);
 

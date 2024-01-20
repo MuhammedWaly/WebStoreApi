@@ -1,19 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebStoreApi.Models
+namespace WebStoreApi.Models.DTOS
 {
     [Index("Email", IsUnique = true)]
-    public class ResetPassword
+    public class ResetPasswordDto
     {
-        public int Id { get; set; }
 
         [MaxLength(100)]
         public string Email { get; set; } = "";
 
-        [MaxLength(200)]
+        public string newPassword { get; set; } = "";
+
+        [MaxLength(300)]
         public string Token { get; set; } = "";
-        
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
     }
 }

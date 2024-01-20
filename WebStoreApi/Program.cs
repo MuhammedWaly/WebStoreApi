@@ -1,3 +1,4 @@
+using MailKit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
@@ -12,6 +13,8 @@ using WebStoreApi.Mapping;
 using WebStoreApi.Models;
 using WebStoreApi.Reposaitories;
 using WebStoreApi.Reposaitories.IReposaitories;
+using WebStoreApi.Services;
+using WebStoreApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,14 +62,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnections"));
 });
 
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
 builder.Services.AddScoped<IContcatsReposaitory, ContactsReposaitory>();
 builder.Services.AddScoped<IProductReposaitory, ProductReposaitory>();
 builder.Services.AddScoped<IAccountReposaitory, AccountReposaitory>();
 builder.Services.AddScoped<IUserReposaitory, UserReposaitory>();
 builder.Services.AddScoped<ICartReposaitory, CartReposaitory>();
 builder.Services.AddScoped<IOrderReposaitory, OrderReposaitory>();
+builder.Services.AddTransient<IMailingService, MailingService>();
 builder.Services.AddAutoMapper(typeof(MappingConfiguration));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+//options =>
+//{
+//options.Tokens.AuthenticatorTokenProvider = "MyAuthenticatorProvider";
+//}
+)
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
 
 builder.Services.AddAuthentication(options =>
 {

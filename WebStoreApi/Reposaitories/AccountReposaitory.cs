@@ -254,5 +254,20 @@ namespace WebStoreApi.Reposaitories
             return true;
         }
 
+        public async Task<ApplicationUser> FindUserByEmailAsync(string email)
+        {
+            return await _userManger.FindByEmailAsync(email);
+        }
+
+        public async Task<string> GeneratePasswordToken(ApplicationUser User)
+        {
+            return await _userManger.GeneratePasswordResetTokenAsync(User);
+         
+        }
+
+        public async Task ChangePasswordAsync(ApplicationUser User, string Token, string Password)
+        {
+            await _userManger.ResetPasswordAsync(User, Token, Password);
+        }
     }
 }

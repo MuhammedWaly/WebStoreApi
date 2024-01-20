@@ -5,8 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebStoreApi.Models;
 using WebStoreApi.Models.DTOS;
+using WebStoreApi.Reposaitories;
 using WebStoreApi.Reposaitories.IReposaitories;
 using WebStoreApi.Services;
 
@@ -19,12 +19,14 @@ namespace WebStoreApi.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IConfiguration _configuration;
         private readonly IAccountReposaitory _accountReposaitory;
+        private readonly IMailingService _mailingService;
 
-        public AccountController(IConfiguration configuration, IAccountReposaitory accountReposaitory, ILogger<AccountController> logger)
+        public AccountController(IConfiguration configuration, IAccountReposaitory accountReposaitory, ILogger<AccountController> logger, IMailingService mailingService)
         {
             _configuration = configuration;
             _accountReposaitory = accountReposaitory;
             _logger = logger;
+            _mailingService = mailingService;
         }
 
 
@@ -117,5 +119,44 @@ namespace WebStoreApi.Controllers
 
             return Ok();
         }
+
+        [HttpPost("ForgotPassword")]
+        
+        public async Task<IActionResult> ForgotPaswword(string Email)
+        {
+            var user = await _accountReposaitory.FindUserByEmailAsync(Email);
+            if (user == null)
+                return NotFound();
+
+            var token = await _accountReposaitory.GeneratePasswordToken(user);
+            
+            string Body = "Dear " + user.FristName + " " + user.LastName + "\n" +
+               "We have received your request to reset your password. \n" +
+               "please copy the token and paste it in reset password section .       \n" +
+               token;
+
+            await _mailingService.SendEmailAsync(user.Email, "Resest Password", Body);
+
+            return Ok();
+
+        }
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPassword)
+        {
+            var user = await _accountReposaitory.FindUserByEmailAsync(resetPassword.Email);
+            if (user == null)
+                return NotFound();
+
+            await _accountReposaitory.ChangePasswordAsync(user, resetPassword.Token, resetPassword.newPassword);
+
+            return Ok();
+
+        }
+
     }
 }

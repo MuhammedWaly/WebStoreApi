@@ -9,6 +9,9 @@ namespace WebStoreApi.Reposaitories.IReposaitories
         Task<ApplicationUser> FindUserById(string id);
         Task<UserProfileDto> GetProfile(string id);
         Task<bool> IsEmailNotRegistered(string email);
+        Task<ApplicationUser> FindUserByEmailAsync(string email);
+        Task<string> GeneratePasswordToken(ApplicationUser User);
+        Task ChangePasswordAsync(ApplicationUser User, string Token, string Password);
         Task<bool> IsUserNameNotRegistered(string UserName);
         Task<LoginResponse> Login(string Email, string password);
         Task<RegisterResponse> Register (UserDto user);
