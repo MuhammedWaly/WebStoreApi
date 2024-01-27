@@ -61,7 +61,7 @@
 4. **UpdateOrder**
 - Update details of a specific order by its ID.
 
-#### Shopping Cart :
+### Shopping Cart :
 
 1. **GetCart**
    - Retrieve the contents of the shopping cart for the currently authenticated user.
@@ -69,7 +69,7 @@
 2. **GetPaymentMethods**
    - Retrieve a list of available payment methods.
 
-### Contacts API :
+### Contacts :
 
 1. **Add a New Contact**
    - Create a new contact.
@@ -101,8 +101,7 @@
    - Retrieve the profile details of the currently authenticated user.
 
 4. **Update User Profile :**
-   - Update the profile details of the currently authenticated user.
-   
+   - Update the profile details of the currently authenticated user.   
 
 5. **Update Password :**
     - Update the password of the currently authenticated user.
