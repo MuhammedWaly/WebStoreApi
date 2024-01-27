@@ -10,15 +10,15 @@
 - **Development Environment:**
   - Visual Studio 2022
 
-  ## Getting Started (Continued)
+ ## Getting Started
 
-2. Open the project in Visual Studio 2022.
+1. Open the project in Visual Studio 2022.
 
-3. Set up your database connection in the `appsettings.json` file.
+2. Set up your database connection in the `appsettings.json` file.
 
-4. Set up your Outlook Email and Password in the `appsettings.json` file.
+2. Set up your Outlook Email and Password in the `appsettings.json` file.
 
-5. Run the project.
+4. Run the project.
 
 
 ## Application Scenarios and Tasks
@@ -47,7 +47,7 @@
 4. **GetUserbyUsername**
 
 
-## Orders Management
+### Orders Management
 
 1. **GetAllOrders**
 -  Retrieve a paginated list of all orders.
