@@ -47,19 +47,20 @@
 4. **GetUserbyUsername**
 
 
-### Orders Management
+### Orders Management :
 
 1. **GetAllOrders**
--  Retrieve a paginated list of all orders.
+   - Retrieve a paginated list of all orders.
 
-2. **GetOrderById**
-- Retrieve details of a specific order by its ID.
+  
+3. **GetOrderById**
+   - Retrieve details of a specific order by its ID.
 
 3. **DeleteOrder**
-- Delete a specific order by its ID.
+   - Delete a specific order by its ID.
 
 4. **UpdateOrder**
-- Update details of a specific order by its ID.
+   - Update details of a specific order by its ID.
 
 ### Shopping Cart :
 
